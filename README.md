@@ -38,16 +38,50 @@ source install/setup.bash
 ```bash
 ros2 run tagfollower_ros2 tagfollower_node
 ```
+### Converting ROS1 Bags to ROS2
+
+To convert existing ROS1 bag files to ROS2 format:
+
+1. Install the rosbags conversion tool:
+```bash
+pip3 install rosbags
+```
+
+2. Convert the bag file:
+```bash
+rosbags-convert --src ros1_bag.bag --dst ros2_bag_dir
+```
+
+This will create a new directory containing the converted ROS2 bag files.
+
+Note: The converter maintains the original message types and topic names. Make sure your ROS2 workspace has all required message definitions.
+
+### Important Note on Bag Conversion
+
+When converting bags, you need to modify the metadata file:
+
+1. Open `ros2_bag_dir/metadata.yaml`
+2. Locate the `/ardrone/navdata` topic section
+3. Update the message type:
+```yaml
+topic_metadata:
+    name: /ardrone/navdata
+    type: tagfollower_ros2/msg/Navdata
+```
+
+This step is required to ensure proper message type mapping in ROS2.
+
 
 ### Playing Recorded Data
 ```bash
 # Navigate to your data directory
-cd ~/your_workspace/src/tagfollower_ros2
+cd ~/your_workspace
 
 # Play the bag file
 ros2 bag play bags2
 ```
 ### Examining Recorded Data
+
 ```bash
 # Get bag info
 ros2 bag info bags2
