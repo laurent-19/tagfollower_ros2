@@ -10,7 +10,19 @@ This package provides functionality to track visual tags from a drone's camera f
 - Uses Kalman filtering for smooth tracking predictions
 - Visualizes the tracking results
 
-## Installation
+### Quick Start with VM Image
+
+For quick setup, you can download a pre-configured Ubuntu 22.04 VM with ROS2 Humble and all required dependencies:
+
+[Download VM Image](https://drive.google.com/uc?export=download&id=1VI4HPSwS0SAeqr2DJljcJwEwZ6_M3Szi)
+
+The VM includes:
+- ROS2 Humble
+- OpenCV 4.x
+- All required ROS2 packages
+- Pre-built tagfollower workspace
+
+Or proceed with manual installation below:
 
 ### Prerequisites
 - ROS2 Humble or later
