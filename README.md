@@ -15,8 +15,10 @@ This package provides functionality to track visual tags from a drone's camera f
 For quick setup, you can download a pre-configured Ubuntu 22.04 VM with ROS2 Humble and all required dependencies:
 
 [Download VM Image](https://drive.google.com/uc?export=download&id=1VI4HPSwS0SAeqr2DJljcJwEwZ6_M3Szi)
+or
+[Pull Docker Image](https://hub.docker.com/r/laurentiupopa/ros2-efac)
 
-The VM includes:
+The VM and Docker image include:
 - ROS2 Humble
 - OpenCV 4.x
 - All required ROS2 packages
@@ -33,27 +35,48 @@ Or proceed with manual installation below:
 
 ### Build Instructions
 ```bash
+# List containers
+docker ps -a
+
+# Enable display for Docker
+xhost local:root
+```
+
+```bash
+# Start docker container
+docker start humble
+
+docker exec -it humble bash
+
 # Clone the repository into your ROS2 workspace
-cd ~/your_workspace/src
-git clone https://github.com/yourusername/tagfollower_ros2.git
+cd ~/ros_ws/src
+
+git clone https://github.com/laurent-19/tagfollower_ros2.git
 
 # Build the package
-cd ~/your_workspace
+cd ~/ros_ws
 colcon build --packages-select tagfollower_ros2
 
 # Source the workspace
 source install/setup.bash
+```
 
 ## Usage
 
 ### Running the Tag Follower Node
+Open a new terminal and run:
 ```bash
+docker exec -it humble bash
+
+source /opt/ros/humble/setup.bash
+source ~/ros_ws/install/setup.bash
+
 ros2 run tagfollower_ros2 tagfollower_node
 ```
 ### Bag Files
 
 Sample ROS bag files for testing are available at:
-- Test flight: https://drive.google.com/drive/folders/1A9WoOUehvs6-Td5MW19uodxnmYH1XlhD?usp=drive_link
+- Test flight: https://drive.google.com/drive/folders/1-IprMRPzJH1ZYo4l7gAOF6wRUGo_Ud4T?usp=drive_link
 
 ### Converting ROS1 Bags to ROS2
 
@@ -92,7 +115,7 @@ This step is required to ensure proper message type mapping in ROS2.
 ### Playing Recorded Data
 ```bash
 # Navigate to your data directory
-cd ~/your_workspace
+cd ~/ros_ws
 
 # Play the bag file
 ros2 bag play bags2
